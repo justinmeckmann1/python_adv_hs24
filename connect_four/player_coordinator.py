@@ -35,14 +35,14 @@ class PlayerCoordinator:
         while (True):
             valid = DropState.COLUMN_INVALID
             self._player_red.draw_board(self._board, self._state)
-            column_to_drop = self._player_red.play_turn()  # get the move of the player
             while(valid != DropState.DROP_OK):
+                column_to_drop = self._player_red.play_turn()  # get the move of the player
                 valid = self.drop_token(GameToken.RED, column_to_drop)
             valid = DropState.COLUMN_INVALID
 
             self._player_yellow.draw_board(self._board, self._state)
-            column_to_drop = self._player_yellow.play_turn()  # get the move of the player
             while(valid != DropState.DROP_OK):
+                column_to_drop = self._player_yellow.play_turn()  # get the move of the player
                 valid = self.drop_token(GameToken.YELLOW, column_to_drop)
             valid = DropState.COLUMN_INVALID
 
