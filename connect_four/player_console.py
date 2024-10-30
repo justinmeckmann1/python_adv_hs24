@@ -15,7 +15,7 @@ class PlayerConsole(PlayerBase):
         self._input = InputConsole()
 
     def play_turn(self) -> int:
-        # TODO: return desired column from user input (0..6)✅
+        # return desired column from user input (0..6)
         temp_position = 0
         self._display.draw_token(temp_position,-1,self.player_id)
         while True:
@@ -36,7 +36,7 @@ class PlayerConsole(PlayerBase):
         return temp_position
 
     def draw_board(self, board: list, state: GameState):
-        # TODO: draw grid with tokens ✅ 
+        # draw grid with tokens 
         self._display.draw_grid(len(board[0]),len(board))
         for y_index, row in enumerate(board):
             for x_index, token in enumerate(row):
