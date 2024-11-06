@@ -1,0 +1,9 @@
+{
+	"folders": [
+		{
+			"uri": "vscode-remote://ssh-remote+eee-w014-128.simple.eee.intern/home/pi"
+		}
+	],
+	"remoteAuthority": "ssh-remote+eee-w014-128.simple.eee.intern",
+	"settings": {}
+}
