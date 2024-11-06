@@ -1,7 +1,7 @@
 
 from player_console import PlayerConsole
 from game_token import GameToken
-from game_state import GameState
+from game_state import *
 from drop_state import DropState
 
 
@@ -33,18 +33,27 @@ class PlayerCoordinator:
     def run(self):
         # play game until won or draw
         while (True):
+            # Get current player based on state
+            current_player = (self._player_red if self._state == GameState.TURN_RED 
+                            else self._player_yellow)
+            current_token = (GameToken.RED if self._state == GameState.TURN_RED 
+                           else GameToken.YELLOW)
+            
+            # Player's turn
             valid = DropState.COLUMN_INVALID
-            self._player_red.draw_board(self._board, self._state)
-            while(valid != DropState.DROP_OK):
-                column_to_drop = self._player_red.play_turn()  # get the move of the player
-                valid = self.drop_token(GameToken.RED, column_to_drop) # check if the drop is valid
-            valid = DropState.COLUMN_INVALID
-
-            self._player_yellow.draw_board(self._board, self._state)
-            while(valid != DropState.DROP_OK):
-                column_to_drop = self._player_yellow.play_turn()  # get the move of the player
-                valid = self.drop_token(GameToken.YELLOW, column_to_drop) # check if the drop is valid
-            valid = DropState.COLUMN_INVALID
+            current_player.draw_board(self._board, self._state)
+            while valid != DropState.DROP_OK:
+                column_to_drop = current_player.play_turn()
+                valid = self.drop_token(current_token, column_to_drop)
+            
+            # Check if game is over 
+            if check_win(self._board) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
+                current_player.draw_board(self._board, self._state)
+                break
+            
+            # Switch turns
+            self._state = (GameState.TURN_YELLOW if self._state == GameState.TURN_RED 
+                          else GameState.TURN_RED)
 
 
 # start a local game
