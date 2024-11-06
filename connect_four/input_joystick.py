@@ -29,25 +29,27 @@ class InputConsole(InputBase):
 
         if key in (b'\xe0', b'\x00'):  # Special keys (arrow keys send two bytes)
             key = msvcrt.getch()  # Get the second byte for direction
-            if key == b'H':
+            match key:
+                case b'H':
                     return Keys.UP
-            elif key == b'P':
-                return Keys.DOWN
-            elif key == b'K':
+                case b'P':
+                    return Keys.DOWN
+                case b'K':
                     return Keys.LEFT
-            elif key ==  b'M':
+                case b'M':
                     return Keys.RIGHT
-            else:
+                case _:
                     return Keys.UNKNOWN
         else:
-            if key == b'\r':
-                return Keys.ENTER
-            elif key == b'\x1b':
+            match key:
+                case b'\r':
+                    return Keys.ENTER
+                case b'\x1b':
                     return Keys.ESC
-            elif key == b'\03':  # Ctrl+C
-                raise KeyboardInterrupt()  # Trigger a KeyboardInterrupt
-            else:
-                return Keys.UNKNOWN
+                case b'\03':  # Ctrl+C
+                    raise KeyboardInterrupt()  # Trigger a KeyboardInterrupt
+                case _:
+                    return Keys.UNKNOWN
 
 
 if __name__ == '__main__':
