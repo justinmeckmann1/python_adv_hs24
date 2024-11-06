@@ -8,8 +8,10 @@ class DisplayConsole(DisplayBase):
     __STARTPOSITION_Y = 1 
     __SPACING_X = 2
     __SPACING_Y = 1
-    __grid_x = 0
-    __grid_y = 0
+    def __init__(self):
+        super().__init__()
+        self.__grid_x = 0
+        self.__grid_y = 0
 
     def __draw_selector(self, x:int) -> None:
         Ansi.gotoXY(x*(self.__SPACING_X+1)+2, 1)
@@ -38,8 +40,10 @@ class DisplayConsole(DisplayBase):
             for temp_index in range(self.__SPACING_Y):
                 print("│"+(" "*self.__SPACING_X+"│") * (self.__grid_x-1)+" "*self.__SPACING_X+"│")
         print("└"+("─"*self.__SPACING_X+"┴") * (self.__grid_x-1)+"─"*self.__SPACING_X+"┘")
+        Ansi.reset()
 
     def draw_token(self, x: int, y: int, token) -> None:
+        Ansi.reset()
         if(y == -1):
             if(token == GameToken.RED):
                 Ansi.set_foreground(1,True)
@@ -88,8 +92,6 @@ https://de.wikipedia.org/wiki/Unicodeblock_Rahmenzeichnung
 
 
 if __name__ == '__main__':
-    Ansi.clear_screen()
-    Ansi.reset()
     fc = DisplayConsole()
     fc.draw_grid(7,6)
     fc.draw_token(0, 0, GameToken.RED)

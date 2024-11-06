@@ -1,7 +1,10 @@
+from sense_hat import SenseHat
 from display_base import DisplayBase
 from display_console import DisplayConsole
+from display_sensehat import DisplaySensehat
 from input_base import Keys
 from input_console import InputConsole
+from input_joystick import InputJoystick
 from player_base import PlayerBase
 from game_state import GameState
 from game_token import GameToken
@@ -13,6 +16,9 @@ class PlayerConsole(PlayerBase):
         super().__init__(player)
         self._display = DisplayConsole()
         self._input = InputConsole()
+        #sense = SenseHat()
+        #self._display = DisplaySensehat(sense)
+        #self._input = InputJoystick(sense)
 
     def play_turn(self) -> int:
         # return desired column from user input (0..6)
@@ -43,12 +49,12 @@ class PlayerConsole(PlayerBase):
                 self._display.draw_token(x_index,y_index,token)
 
 if __name__ == "__main__":
-    board = [[' ' for _ in range(7)] for _ in range(6)]
+    board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
     board[5][0] = GameToken.RED  # [Y][X]
     p = PlayerConsole(GameToken.YELLOW)
 
-    Ansi.clear_screen()
-    Ansi.reset()
+    #Ansi.clear_screen()
+    #Ansi.reset()
     p.draw_board(board, GameState.TURN_YELLOW)
     pos = p.play_turn()
     Ansi.reset()
