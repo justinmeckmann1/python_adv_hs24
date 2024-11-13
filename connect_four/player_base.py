@@ -1,5 +1,6 @@
 from display_base import *
 from game_state import *
+from input_base import InputBase
 from input_base import Keys
 
 
@@ -21,7 +22,8 @@ class PlayerBase:
         - player: The token representing the player (e.g., RED or YELLOW).
         """
         self._player = player
-
+        self._input = InputBase()
+        self._display = DisplayBase()
     def play_turn(self) -> int:
         """
         Asks the player to play their turn.
