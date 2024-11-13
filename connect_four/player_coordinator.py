@@ -7,8 +7,8 @@ from drop_state import DropState
 class PlayerCoordinator:
     def __init__(self):
         # initialize players
-        self._player_red = PlayerSenseHat(GameToken.RED)  # X
-        self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
+        self._player_red = PlayerConsole(GameToken.RED)  # X
+        self._player_yellow = PlayerConsole(GameToken.YELLOW)  # 0
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
         self._state = GameState.TURN_RED
 

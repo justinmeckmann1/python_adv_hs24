@@ -1,6 +1,6 @@
-try: import msvcrt # skip for entry on raspberry, because msvcrt is not avaliable for unix
-except ModuleNotFoundError:
-     pass
+import os
+if os.name == 'nt':
+    import msvcrt # skip for entry on raspberry, because msvcrt is not avaliable for unix
 from input_base import InputBase
 from input_base import Keys
 from enum import Enum
