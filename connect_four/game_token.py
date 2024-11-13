@@ -1,7 +1,6 @@
-from enum import Enum
+from strenum import StrEnum
 
-
-class GameToken(Enum):
+class GameToken(StrEnum):
     """
     Enum class representing the two different game tokens.
     """

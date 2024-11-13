@@ -1,15 +1,14 @@
-
+from player_sensehate import PlayerSenseHat
 from player_console import PlayerConsole
 from game_token import GameToken
 from game_state import *
 from drop_state import DropState
 
-
 class PlayerCoordinator:
     def __init__(self):
         # initialize players
-        self._player_red = PlayerConsole(GameToken.RED)  # X
-        self._player_yellow = PlayerConsole(GameToken.YELLOW)  # 0
+        self._player_red = PlayerSenseHat(GameToken.RED)  # X
+        self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
         self._state = GameState.TURN_RED
 
@@ -49,6 +48,7 @@ class PlayerCoordinator:
             # Check if game is over 
             if check_win(self._board) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
                 current_player.draw_board(self._board, self._state)
+                # do something to display winner 
                 break
             
             # Switch turns

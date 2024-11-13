@@ -1,5 +1,7 @@
 from display_base import *
-from game_state import GameState
+from game_state import *
+from input_base import Keys
+
 
 
 class PlayerBase:
@@ -30,9 +32,26 @@ class PlayerBase:
         Raises:
             NotImplementedError: This method must be implemented by subclasses.
         """
-        raise NotImplementedError("You need to subclass Player to use play_turn().")
+        temp_position = 0
+        self._display.draw_token(temp_position,-1,self.player_id)
+        while True:
+            key = self._input.read_key()
+            if key == Keys.ENTER:
+                self._display.draw_token(temp_position,-1,GameToken.EMPTY)
+                break
+            if (key == Keys.LEFT): 
+                if(temp_position >= 1):
+                    self._display.draw_token(temp_position,-1,GameToken.EMPTY)
+                    temp_position -= 1
+                    self._display.draw_token(temp_position,-1,self.player_id)
+            if (key == Keys.RIGHT):  
+                if(temp_position <= self._display.get_x_grid()-2):
+                    self._display.draw_token(temp_position,-1,GameToken.EMPTY)
+                    temp_position += 1
+                    self._display.draw_token(temp_position,-1,self.player_id)
+        return temp_position
 
-    def draw_board(self, board) -> None:
+    def draw_board(self, board: list, state: GameState) -> None:
         """
         Draw the game board for the player.
 
@@ -42,7 +61,10 @@ class PlayerBase:
         Raises:
             NotImplementedError: This method must be implemented by subclasses.
         """
-        raise NotImplementedError("You need to subclass Player to use draw_board().")
+        self._display.draw_grid(len(board[0]),len(board))
+        for y_index, row in enumerate(board):
+            for x_index, token in enumerate(row):
+                self._display.draw_token(x_index,y_index,token)
 
     @property
     def player_id(self) -> GameToken:
