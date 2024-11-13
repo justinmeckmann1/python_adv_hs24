@@ -50,10 +50,11 @@ class PlayerCoordinator:
             while valid != DropState.DROP_OK:
                 column_to_drop = current_player.play_turn()
                 valid = self.drop_token(current_token, column_to_drop)
-            
+            current_player.draw_board(self._board, self._state)
+
             # Check if game is over 
             if check_win(self._board) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                current_player.draw_board(self._board, self._state)
+                #current_player.draw_board(self._board, self._state)
                 # do something to display winner 
                 break
             

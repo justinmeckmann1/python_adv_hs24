@@ -10,13 +10,15 @@ from game_state import GameState
 from game_token import GameToken
 from ansi import Ansi
 
+        
+sense = SenseHat()
 
 class PlayerSenseHat(PlayerBase):
     def __init__(self, player: GameToken):  # Red or Yellow player
         super().__init__(player)
         # self._display = DisplayConsole()
         # self._input = InputConsole()
-        sense = SenseHat()
+        #sense = SenseHat()
         self._display = DisplaySensehat(sense)
         self._input = InputJoystick(sense)
 
