@@ -2,7 +2,7 @@ from game_logic_base import GameLogicBase
 from player_sensehat import PlayerSenseHat
 from player_console import PlayerConsole
 from game_token import GameToken
-from game_state import *
+from game_state import GameState, check_win
 from drop_state import DropState
 
 class GameLogic(GameLogicBase):
@@ -11,7 +11,7 @@ class GameLogic(GameLogicBase):
         self._state = GameState.TURN_RED
 
     def get_board(): -> list:
-        pass
+        return [row[:] for row in self._board]
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
         # check if the column is valid (0..6) => return the appropriate DropState
@@ -31,5 +31,11 @@ class GameLogic(GameLogicBase):
         return DropState.DROP_OK
 
     def get_state(): -> GameState
-        pass
+        game_result = check_win(self._board)
         
+        # check if game is over and if so, return the results
+        if game_result in [GameState.WON_RED, GameState.WON_YELLOW, GameState.DRAW]:
+            return game_result
+
+        # else, return the current state
+        return self._state
