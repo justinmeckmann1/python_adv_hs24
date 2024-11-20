@@ -8,11 +8,9 @@ from drop_state import DropState
 class GameLogic(GameLogicBase):
 
     def __init__(self):
+        super().__init__()
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
         self._state = GameState.TURN_RED # alway start with player red
-
-    def get_board(self) -> list:
-        return [row[:] for row in self._board]
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
         # check if the column is valid (0..6) => return the appropriate DropState

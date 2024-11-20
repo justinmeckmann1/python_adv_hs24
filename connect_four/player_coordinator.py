@@ -5,6 +5,7 @@ from player_console import PlayerConsole
 from game_token import GameToken
 from game_state import *
 from drop_state import DropState
+from game_logic_base import GameLogicBase
 from game_logic import GameLogic
 
 class PlayerCoordinator:
@@ -17,25 +18,25 @@ class PlayerCoordinator:
             self._player_red = PlayerSenseHat(GameToken.RED)  # X
             self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
 
-    def run(self):
+    def run(self, game: GameLogicBase):
         # play game until won or draw
         while (True):
             # Get current player based on state
-            current_player = (self._player_red if self._state == GameState.TURN_RED 
+            current_player = (self._player_red if game.get_state() == GameState.TURN_RED 
                             else self._player_yellow)
-            current_token = (GameToken.RED if self._state == GameState.TURN_RED 
+            current_token = (GameToken.RED if current_player == self._player_red 
                            else GameToken.YELLOW)
             
             # Player's turn
             valid = DropState.COLUMN_INVALID
-            current_player.draw_board(game._board, game._state)
+            current_player.draw_board(game.get_board(), game.get_state())
             while valid != DropState.DROP_OK:
                 column_to_drop = current_player.play_turn()
                 valid = game.drop_token(current_token, column_to_drop)
-            current_player.draw_board(game._board, game._state)
+            current_player.draw_board(game.get_board(), game.get_state())
 
             # Check if game is over 
-            if check_win(game._board) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
+            if check_win(game.get_board()) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
                 #current_player.draw_board(self._board, self._state)
                 # do something to display winner 
                 break
@@ -47,5 +48,5 @@ class PlayerCoordinator:
 # start a local game
 if __name__ == '__main__':
     game = GameLogic()
-    coordinator = PlayerCoordinator()
+    coordinator = PlayerCoordinator(game)
     coordinator.run()

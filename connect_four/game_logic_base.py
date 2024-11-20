@@ -9,11 +9,11 @@ class GameLogicBase:
     """
 
     def __init__(self):
-        pass
+        self._board = []
 
     def get_board(self) -> list:
         """
-        Returns the board as a list of lists. The board positions are displayed as a string. They can contain one of 3 values:
+        Returns the board as a list. The board positions are displayed as a string. They can contain one of 3 values:
         - 'X' or '0': the game position is occupied by player 'X' or '0', respectively
         - ' ': the game position is still unoccupied
         """
