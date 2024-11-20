@@ -16,8 +16,6 @@ class PlayerCoordinator:
         else:
             self._player_red = PlayerSenseHat(GameToken.RED)  # X
             self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
-        self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
-        self._state = GameState.TURN_RED
 
     def run(self):
         # play game until won or draw
@@ -48,6 +46,6 @@ class PlayerCoordinator:
 
 # start a local game
 if __name__ == '__main__':
-    coordinator = PlayerCoordinator()
     game = GameLogic()
+    coordinator = PlayerCoordinator()
     coordinator.run()

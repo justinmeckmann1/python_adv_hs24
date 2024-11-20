@@ -6,11 +6,12 @@ from game_state import GameState, check_win
 from drop_state import DropState
 
 class GameLogic(GameLogicBase):
+
     def __init__(self):
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
         self._state = GameState.TURN_RED # alway start with player red
 
-    def get_board() -> list:
+    def get_board(self) -> list:
         return [row[:] for row in self._board]
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
@@ -30,7 +31,7 @@ class GameLogic(GameLogicBase):
     
         return DropState.DROP_OK
 
-    def get_state() -> GameState:
+    def get_state(self) -> GameState:
         game_result = check_win(self._board)
         
         # check if game is over and if so, return the results
