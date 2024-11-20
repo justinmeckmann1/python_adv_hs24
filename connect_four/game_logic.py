@@ -8,9 +8,9 @@ from drop_state import DropState
 class GameLogic(GameLogicBase):
     def __init__(self):
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
-        self._state = GameState.TURN_RED
+        self._state = GameState.TURN_RED # alway start with player red
 
-    def get_board(): -> list:
+    def get_board() -> list:
         return [row[:] for row in self._board]
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
@@ -30,11 +30,12 @@ class GameLogic(GameLogicBase):
     
         return DropState.DROP_OK
 
-    def get_state(): -> GameState
+    def get_state() -> GameState:
         game_result = check_win(self._board)
         
         # check if game is over and if so, return the results
         if game_result in [GameState.WON_RED, GameState.WON_YELLOW, GameState.DRAW]:
+            
             return game_result
 
         # else, return the current state
