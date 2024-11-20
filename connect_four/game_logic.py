@@ -1,5 +1,7 @@
 from game_logic_base import GameLogicBase
-from player_sensehat import PlayerSenseHat
+import os
+if os.name != 'nt':
+    from player_sensehat import PlayerSenseHat
 from player_console import PlayerConsole
 from game_token import GameToken
 from game_state import GameState, check_win
@@ -39,3 +41,6 @@ class GameLogic(GameLogicBase):
 
         # else, return the current state
         return self._state
+    
+    def set_state(self, state) -> GameState:
+        self._state = state

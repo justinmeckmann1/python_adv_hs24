@@ -42,11 +42,12 @@ class PlayerCoordinator:
                 break
             
             # Switch turns
-            self._state = (GameState.TURN_YELLOW if self._state == GameState.TURN_RED 
+            state = (GameState.TURN_YELLOW if game.get_state() == GameState.TURN_RED 
                           else GameState.TURN_RED)
+            game.set_state(state)
 
 # start a local game
 if __name__ == '__main__':
     game = GameLogic()
-    coordinator = PlayerCoordinator(game)
-    coordinator.run()
+    coordinator = PlayerCoordinator()
+    coordinator.run(game)

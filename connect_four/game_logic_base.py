@@ -21,6 +21,9 @@ class GameLogicBase:
 
     def get_state(self) -> GameState:
         raise NotImplementedError("")
+    
+    def set_state(self, state) -> GameState:
+        raise NotImplementedError("")
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
         """
@@ -33,3 +36,4 @@ class GameLogicBase:
 
         """
         raise NotImplementedError("You need to subclass GameLogicBase to use move().")
+    
