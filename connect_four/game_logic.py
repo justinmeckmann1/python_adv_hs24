@@ -6,13 +6,17 @@ from player_console import PlayerConsole
 from game_token import GameToken
 from game_state import GameState, check_win
 from drop_state import DropState
+import random
 
 class GameLogic(GameLogicBase):
 
     def __init__(self):
         super().__init__()
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
-        self._state = GameState.TURN_RED # alway start with player red
+        if random.getrandbits(1):
+            self._state = GameState.TURN_RED
+        else:
+            self._state = GameState.TURN_YELLOW
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
         # check if the column is valid (0..6) => return the appropriate DropState

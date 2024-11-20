@@ -15,10 +15,12 @@ class PlayerCoordinator:
             self._player_red = PlayerConsole(GameToken.RED)  # X
             self._player_yellow = PlayerConsole(GameToken.YELLOW)  # 0
         else:
-            self._player_red = PlayerSenseHat(GameToken.RED)  # X
+            self._player_red = PlayerConsole(GameToken.RED)  # X
             self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
 
     def run(self, game: GameLogicBase):
+        self._player_red.draw_board(game.get_board(), game.get_state())
+        self._player_yellow.draw_board(game.get_board(), game.get_state())
         # play game until won or draw
         while (True):
             # Get current player based on state
@@ -37,7 +39,9 @@ class PlayerCoordinator:
 
             # Check if game is over 
             if check_win(game.get_board()) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                #current_player.draw_board(self._board, self._state)
+                current_player = (self._player_yellow if game.get_state() == GameState.TURN_RED #select the looser
+                            else self._player_red)
+                current_player.draw_board(game.get_board(), game.get_state()) #draw board for the looser
                 # do something to display winner 
                 break
             
@@ -51,3 +55,4 @@ if __name__ == '__main__':
     game = GameLogic()
     coordinator = PlayerCoordinator()
     coordinator.run(game)
+
