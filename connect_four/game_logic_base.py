@@ -21,9 +21,6 @@ class GameLogicBase:
 
     def get_state(self) -> GameState:
         raise NotImplementedError("")
-    
-    def set_state(self, state) -> GameState:
-        raise NotImplementedError("")
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
         """

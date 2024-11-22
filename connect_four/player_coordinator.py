@@ -44,11 +44,6 @@ class PlayerCoordinator:
                 current_player.draw_board(game.get_board(), game.get_state()) #draw board for the looser
                 # do something to display winner 
                 break
-            
-            # Switch turns
-            state = (GameState.TURN_YELLOW if game.get_state() == GameState.TURN_RED 
-                          else GameState.TURN_RED)
-            game.set_state(state)
 
 # start a local game
 if __name__ == '__main__':

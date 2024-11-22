@@ -53,8 +53,7 @@ def check_win(board: list) -> GameState:
         return GameState.DRAW
 
     # Game is still ongoing
-    return GameState.TURN_YELLOW if any(token == GameToken.RED for row in board for token in row) else GameState.TURN_RED
-
+    return GameState.TURN_RED #default open as red
 
 if __name__ == '__main__':
     s = GameState.TURN_RED
