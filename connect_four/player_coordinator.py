@@ -38,7 +38,7 @@ class PlayerCoordinator:
             current_player.draw_board(game.get_board(), game.get_state())
 
             # Check if game is over 
-            if check_win(game.get_board()) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
+            if game.get_state() in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
                 current_player = (self._player_yellow if game.get_state() == GameState.WON_RED #select the looser
                             else self._player_red)
                 current_player.draw_board(game.get_board(), game.get_state()) #draw board for the looser
