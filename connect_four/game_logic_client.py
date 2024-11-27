@@ -19,12 +19,11 @@ class GameLogicClient(GameLogicBase):
 
     def get_state(self) -> GameState:
         response = requests.get( f"{self._url}/state")
-        # IMPLEMENT METHOD HERE!
         return response.json().get("game_state")
             
     def drop_token(self, player, column) -> DropState:
-        response = requests.get( f"{self._url}/drop")
-        # IMPLEMENT METHOD HERE
+        token = {["player_id",player],["column",column]}
+        response = requests.post(token)
         return response.json().get("drop_state")
 
 
