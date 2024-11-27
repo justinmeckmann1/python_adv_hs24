@@ -97,8 +97,10 @@ if __name__ == "__main__":
                             description: The current state of the game, represented as integer number [0..4]
                             example: 1
         """
-        # IMPLEMENT GET /api/state HERE
-        return jsonify({"game_state": "not implemented!"}), 501 # status code: 501: Not implemented
+
+        state = game.get_state()
+
+        return jsonify({"state": state}), 200 # status code: 200 Ok
 
     @app.route('/api/drop', methods=['POST'])
     def drop_token():
@@ -164,6 +166,8 @@ if __name__ == "__main__":
                             example: Fields 'player_id' and/or 'column' missing in request body.
         """
         # IMPLEMENT POST /api/drop HERE!
+    
+
         return jsonify({"drop_state": "not implemented!"}), 501
     
     

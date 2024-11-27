@@ -18,12 +18,14 @@ class GameLogicClient(GameLogicBase):
         return response.json().get("board")
 
     def get_state(self) -> GameState:
+        response = requests.get( f"{self._url}/state")
         # IMPLEMENT METHOD HERE!
-        return GameState.TURN_RED
-
+        return response.json().get("game_state")
+            
     def drop_token(self, player, column) -> DropState:
+        response = requests.get( f"{self._url}/drop")
         # IMPLEMENT METHOD HERE
-        return DropState.DROP_OK
+        return response.json().get("drop_state")
 
 
 if __name__ == '__main__':
