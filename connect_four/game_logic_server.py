@@ -3,6 +3,7 @@ from game_state import GameState
 from drop_state import DropState
 from flask import Flask, request, jsonify
 from flasgger import Swagger
+import threading
 
 
 if __name__ == "__main__":
@@ -10,6 +11,11 @@ if __name__ == "__main__":
     app = Flask(__name__)
     swagger = Swagger(app)
 
+    def reset_board(): 
+        game = GameLogic() #reset board
+    # Set the timer to call reset_board after 10 seconds
+    Reset_timer = threading.Timer(10.0, reset_board)
+    
     @app.route('/api/board', methods=['GET'])
     def get_board():
         """
@@ -63,6 +69,7 @@ if __name__ == "__main__":
         # working implementation for GET /api/board
         # get the board from the local GameLogic object
         board = game.get_board()
+
         # return board to the caller via JSON response
         return jsonify( {"board": board} ), 200 # status code: 200 Ok
 
@@ -97,7 +104,13 @@ if __name__ == "__main__":
                             description: The current state of the game, represented as integer number [0..4]
                             example: 1
         """
-        return jsonify({"game_state": game.get_state()}), 200  # status code: 200 Ok
+        state = game.get_state()
+        #if GameState is a finished condition then start a timer to reset the game
+        if state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
+            # Start the timer
+            Reset_timer.start()
+
+        return jsonify({"game_state": state.value}), 200  # status code: 200 Ok
 
     @app.route('/api/drop', methods=['POST'])
     def drop_token():
@@ -163,15 +176,17 @@ if __name__ == "__main__":
                             example: Fields 'player_id' and/or 'column' missing in request body.
         """
         # IMPLEMENT POST /api/drop HERE!
-        request_dict = request.json()
-        print(request)
-        if ("player" in request_dict and "column" in request_dict):
+        request_dict = request.json
+        print("------------------")
+        print(request_dict)
+        print("------------------")
+        if ("player_id" in request_dict and "column" in request_dict):
             DropState = game.drop_token(request_dict["player_id"],request_dict["column"])
-            return jsonify({"drop_state": DropState}), 200 # status code: 200 Ok
+            return jsonify({"drop_state": DropState.value}), 200 # status code: 200 Ok
         else:
-            return jsonify(), 400
-    
-    
+            return jsonify(), 400 #Fields 'player_id' and/or 'column' missing in request body.
+
+
     # starting the server on all interfaces
     print("Game server start")
     app.run(host="0.0.0.0", debug=True)

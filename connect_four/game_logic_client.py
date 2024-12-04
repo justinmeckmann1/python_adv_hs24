@@ -22,8 +22,8 @@ class GameLogicClient(GameLogicBase):
         return response.json().get("game_state")
             
     def drop_token(self, player, column) -> DropState:
-        token = dict(player_id=player,column=column)
-        response = requests.post(token)
+        token = dict(player_id=player, column=column)
+        response = requests.post(f"{self._url}/drop", json=token)
         return response.json().get("drop_state")
 
 
