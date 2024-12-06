@@ -14,35 +14,6 @@ class PlayerConsole(PlayerBase):
         self._display = DisplayConsole()
         self._input = InputConsole()
 
-
-    # def play_turn(self) -> int:
-    #     # return desired column from user input (0..6)
-    #     temp_position = 0
-    #     self._display.draw_token(temp_position,-1,self.player_id)
-    #     while True:
-    #         key = self._input.read_key()
-    #         if key == Keys.ENTER:
-    #             self._display.draw_token(temp_position,-1,GameToken.EMPTY)
-    #             break
-    #         if (key == Keys.LEFT): 
-    #             if(temp_position >= 1):
-    #                 self._display.draw_token(temp_position,-1,GameToken.EMPTY)
-    #                 temp_position -= 1
-    #                 self._display.draw_token(temp_position,-1,self.player_id)
-    #         if (key == Keys.RIGHT):  
-    #             if(temp_position <= self._display.get_x_grid()-2):
-    #                 self._display.draw_token(temp_position,-1,GameToken.EMPTY)
-    #                 temp_position += 1
-    #                 self._display.draw_token(temp_position,-1,self.player_id)
-    #     return temp_position
-
-    # def draw_board(self, board: list, state: GameState):
-    #     # draw grid with tokens 
-    #     self._display.draw_grid(len(board[0]),len(board))
-    #     for y_index, row in enumerate(board):
-    #         for x_index, token in enumerate(row):
-    #             self._display.draw_token(x_index,y_index,token)
-
 if __name__ == "__main__":
     board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
     board[5][0] = GameToken.RED  # [Y][X]

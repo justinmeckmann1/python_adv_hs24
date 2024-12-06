@@ -60,6 +60,12 @@ class DisplaySensehat(DisplayBase):
             else:
                 raise ValueError("Unknown token")
 
+    def draw_winner(self, token:GameToken) -> None:
+        for x in range(0,self.__grid_x):
+            if(token == GameToken.RED):
+                self.__draw_selector(x,self.__RED)
+            elif(token == GameToken.YELLOW):
+                self.__draw_selector(x,self.__YELLOW)
 
 if __name__ == '__main__':
     sense = SenseHat()
@@ -67,6 +73,7 @@ if __name__ == '__main__':
     fc.draw_grid(7,6)
     fc.draw_token(0, 0, GameToken.RED)
     fc.draw_token(5, 2, GameToken.YELLOW)
+    fc.draw_winner(GameToken.YELLOW)
     #print(fc.get_x_grid())
     #print(type(GameToken.RED))
     #print(GameToken.RED)

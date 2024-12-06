@@ -1,8 +1,4 @@
 from game_logic_base import GameLogicBase
-import os
-if os.name != 'nt':
-    from player_sensehat import PlayerSenseHat
-from player_console import PlayerConsole
 from game_token import GameToken
 from game_state import GameState, check_win
 from drop_state import DropState

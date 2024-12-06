@@ -35,3 +35,15 @@ class DisplayBase:
         Returns the Last grid x size
         """
         raise NotImplementedError("Subclasses must implement this method.")
+
+    def draw_winner(self, token:GameToken) -> None:
+        """
+        Display the winner with the Selector
+
+        Parameters:
+        - token: token of the Winner
+
+        This method should be implemented by subclasses to provide 
+        specific winner drawing.
+        """
+        raise NotImplementedError("Subclasses must implement this method.")

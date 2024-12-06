@@ -34,3 +34,4 @@ class GameLogicBase:
         """
         raise NotImplementedError("You need to subclass GameLogicBase to use move().")
     
+    

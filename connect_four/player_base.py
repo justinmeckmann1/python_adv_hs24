@@ -77,3 +77,12 @@ class PlayerBase:
             GameToken: The token representing the player.
         """
         return self._player
+    
+    def display_winner(self, token: GameToken) -> None:
+        """
+        Draw something to indicate the winner
+
+        Parameters:
+        - token: The token of the winner
+        """
+        self._display.draw_winner(token)

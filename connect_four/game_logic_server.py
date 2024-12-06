@@ -5,6 +5,13 @@ from flask import Flask, request, jsonify
 from flasgger import Swagger
 import threading
 
+#To Start Server on Webserver do the following commands:
+#$HOME/miniconda/bin/conda init
+#source ~/.bashrc
+#conda activate myenv
+#cd
+#cd PYTHON_PROJECT/connect_four/
+#nohup python3 game_logic_server.py > output.log 2>&1 &
 
 if __name__ == "__main__":
     game = GameLogic()

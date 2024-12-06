@@ -73,6 +73,18 @@ class DisplayConsole(DisplayBase):
                     break
         Ansi.reset()
 
+    def draw_winner(self, token:GameToken) -> None:
+        Ansi.reset()
+        for x in range(0,self.__grid_x):
+            if(token == GameToken.RED):
+                Ansi.set_foreground(1,True)
+                self.__draw_selector(x)
+            elif(token == GameToken.YELLOW):
+                Ansi.set_foreground(3,True)
+                self.__draw_selector(x)
+        Ansi.reset()
+
+
 """
 ┌
 ┐
@@ -96,6 +108,7 @@ if __name__ == '__main__':
     fc.draw_grid(7,6)
     fc.draw_token(0, 0, GameToken.RED)
     fc.draw_token(5, 2, GameToken.YELLOW)
+    fc.draw_winner(GameToken.YELLOW)
     Ansi.gotoXY(1, 20)
     #print(fc.get_x_grid())
     #print(type(GameToken.RED))
