@@ -38,11 +38,15 @@ class PlayerCoordinator:
             current_player.draw_board(game.get_board(), game.get_state())
 
             # Check if game is over 
-            if check_win(game.get_board()) in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                current_player = (self._player_yellow if game.get_state() == GameState.WON_RED #select the looser
+            temp_gamestate = game.get_state()
+            if temp_gamestate in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
+                winner_token = (GameToken.RED if temp_gamestate == GameState.WON_RED 
+                            else GameToken.YELLOW)
+                current_player.display_winner(winner_token)
+                current_player = (self._player_yellow if temp_gamestate == GameState.WON_RED #select the looser
                             else self._player_red)
-                current_player.draw_board(game.get_board(), game.get_state()) #draw board for the looser
-                # do something to display winner 
+                current_player.draw_board(game.get_board(), temp_gamestate) #draw board for the looser
+                current_player.display_winner(winner_token)
                 break
 
 # start a local game

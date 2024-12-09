@@ -55,9 +55,15 @@ class PlayerCoordinator:
                 # current_player.draw_board(game.get_board(), temp_gamestate) #draw board for the looser
                 # current_player.display_winner(winner_token)
                 break
+            
+            # If it's not our turn, wait a bit and update the board
+            if game_state == GameState.TURN_YELLOW:
+                self._local_player.draw_board(game.get_board(), game_state)
+                game.wait_for_remote_move()
 
-# start a local game
+# start a remote game
 if __name__ == '__main__':
+    game = GameLogicClient(host='localhost:5000')
     game = GameLogicClient(host='localhost:5000')
     coordinator = PlayerCoordinator()
     coordinator.run(game)
