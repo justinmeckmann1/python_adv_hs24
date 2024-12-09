@@ -17,7 +17,7 @@ class PlayerCoordinator:
             # self._local_player = PlayerConsole(GameToken.YELLOW)
 
         else:
-            self._local_player = PlayerSenseHat(GameToken.RED)
+            self._local_player = PlayerSenseHat(GameToken.YELLOW)
             # self._local_player = PlayerSenseHat(GameToken.YELLOW)
 
 
