@@ -50,7 +50,7 @@ class PlayerCoordinator:
 
 # start a remote game
 if __name__ == '__main__':
-    game = GameLogicClient()
+    game = GameLogicClient(host='localhost:5000')
     coordinator = PlayerCoordinator()
     coordinator.run(game)
 

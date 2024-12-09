@@ -1,31 +1,37 @@
-from game_logic import GameLogicBase
+from game_logic_base import GameLogicBase
 from game_state import GameState
 from drop_state import DropState
 from game_token import GameToken
 import requests
+import time
 
 class GameLogicClient(GameLogicBase):
 
     def __init__(self, host):
         super().__init__()
-        print( f"GameLogicClient initialized with host {host}" )
-        self._url = f'http://{host}:5000/api'
+        # Remove 'http://' if it's included in the host parameter
+        host = host.replace('http://', '').replace('https://', '')
+        print(f"GameLogicClient initialized with host {host}")
+        self._url = f'http://{host}/api'
 
     def get_board(self) -> list:
         # call remote API
-        response = requests.get( f"{self._url}/board")
-        # return result to locall caller
+        response = requests.get(f"{self._url}/board")
+        # return result to local caller
         return response.json().get("board")
 
     def get_state(self) -> GameState:
-        response = requests.get( f"{self._url}/state")
-        return response.json().get("game_state")
+        response = requests.get(f"{self._url}/state")
+        return GameState(response.json().get("game_state"))
             
     def drop_token(self, player, column) -> DropState:
         token = dict(player_id=player, column=column)
         response = requests.post(f"{self._url}/drop", json=token)
-        return response.json().get("drop_state")
+        return DropState(response.json().get("drop_state"))
 
+    def wait_for_remote_move(self, delay=0.01):
+        """Wait for remote player's move by polling the server"""
+        time.sleep(delay)
 
 if __name__ == '__main__':
     """
