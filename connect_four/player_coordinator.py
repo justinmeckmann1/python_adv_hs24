@@ -25,14 +25,14 @@ class PlayerCoordinator:
         # play game until won or draw
         while (True):
             # Get current player based on state
-            state = game.get_state()
+            game_state = game.get_state()
             
             current_player = self._player if (
-                (self._player.player_id == GameToken.RED and state == GameState.TURN_RED) or 
-                (self._player.player_id == GameToken.YELLOW and state == GameState.TURN_YELLOW)
+                (self._player.player_id == GameToken.RED and game_state == GameState.TURN_RED) or 
+                (self._player.player_id == GameToken.YELLOW and game_state == GameState.TURN_YELLOW)
             ) else None
             
-            current_token = (GameToken.RED if state == GameState.TURN_RED else GameToken.YELLOW)
+            current_token = (GameToken.RED if game_state == GameState.TURN_RED else GameToken.YELLOW)
             
             valid = DropState.COLUMN_INVALID
             
@@ -57,7 +57,7 @@ class PlayerCoordinator:
                 break
             
             # If it's not our turn, wait a bit and update the board
-            if game_state == GameState.TURN_YELLOW:
+            if self._player.player_id != game_state:
                 self._local_player.draw_board(game.get_board(), game_state)
                 game.wait_for_remote_move()
 
