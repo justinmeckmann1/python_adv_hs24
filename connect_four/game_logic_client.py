@@ -9,7 +9,6 @@ class GameLogicClient(GameLogicBase):
 
     def __init__(self, host):
         super().__init__()
-        # Remove 'http://' if it's included in the host parameter
         host = host.replace('http://', '').replace('https://', '')
         print(f"GameLogicClient initialized with host {host}")
         self._url = f'http://{host}/api'
@@ -29,7 +28,7 @@ class GameLogicClient(GameLogicBase):
         response = requests.post(f"{self._url}/drop", json=token)
         return DropState(response.json().get("drop_state"))
 
-    def wait_for_remote_move(self, delay=0.01):
+    def wait_for_remote_move(self, delay=0.5):
         """Wait for remote player's move by polling the server"""
         time.sleep(delay)
 
