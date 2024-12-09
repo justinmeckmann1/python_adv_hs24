@@ -73,7 +73,7 @@ if __name__ == "__main__":
                                     type: string
                                     description: A token in the game, represented by one of 'X', 'O', ' '
         """
-        print(f"GET /api/board received from {request.remote_addr}")
+        # print(f"GET /api/board received from {request.remote_addr}")
         # working implementation for GET /api/board
         # get the board from the local GameLogic object
         board = game.get_board()
@@ -114,12 +114,12 @@ if __name__ == "__main__":
         """
         state = game.get_state()
         #if GameState is a finished condition then start a timer to reset the game
-        print(f"GET /api/state received from {request.remote_addr}")
-
+        
+        # print(f"GET /api/state received from {request.remote_addr}")
         if state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
             # Start the timer
+            Reset_timer = threading.Timer(10.0, reset_board)
             Reset_timer.start()
-
         return jsonify({"game_state": state.value}), 200  # status code: 200 Ok
 
     @app.route('/api/drop', methods=['POST'])
@@ -190,7 +190,7 @@ if __name__ == "__main__":
         print("------------------")
         print(request_dict)
         print("------------------")
-        print(f"GET /api/state received from {request.remote_addr}")
+        # print(f"GET /api/state received from {request.remote_addr}")
         if ("player_id" in request_dict and "column" in request_dict):
             DropState = game.drop_token(request_dict["player_id"],request_dict["column"])
             return jsonify({"drop_state": DropState.value}), 200 # status code: 200 Ok

@@ -9,8 +9,8 @@ from game_logic_base import GameLogicBase
 from game_logic import GameLogic
 from game_logic_client import GameLogicClient
 
-color = 'red'
-# color = 'yellow'
+# color = 'red'
+color = 'yellow'
 
 class PlayerCoordinator:
     def __init__(self):
@@ -58,7 +58,7 @@ class PlayerCoordinator:
             
             # If it's not our turn, wait a bit and update the board
             if self._player.player_id != game_state:
-                self._local_player.draw_board(game.get_board(), game_state)
+                self._player.draw_board(game.get_board(), game_state)
                 game.wait_for_remote_move()
 
 # start a remote game
