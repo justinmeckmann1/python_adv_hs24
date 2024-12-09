@@ -9,8 +9,8 @@ from game_logic_base import GameLogicBase
 from game_logic import GameLogic
 from game_logic_client import GameLogicClient
 
-# color = 'red'
-color = 'yellow'
+color = 'red'
+# color = 'yellow'
 
 class PlayerCoordinator:
     def __init__(self):

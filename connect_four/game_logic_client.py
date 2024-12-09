@@ -28,7 +28,7 @@ class GameLogicClient(GameLogicBase):
         response = requests.post(f"{self._url}/drop", json=token)
         return DropState(response.json().get("drop_state"))
 
-    def wait_for_remote_move(self, delay=0.01):
+    def wait_for_remote_move(self, delay=0.5):
         """Wait for remote player's move by polling the server"""
         time.sleep(delay)
 
