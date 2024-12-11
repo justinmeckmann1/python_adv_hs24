@@ -11,6 +11,7 @@ from game_logic_client import GameLogicClient
 
 color = 'red'
 # color = 'yellow'
+host = '10.180.254.88:5000'
 
 class PlayerCoordinator:
     def __init__(self):
@@ -63,8 +64,7 @@ class PlayerCoordinator:
 
 # start a remote game
 if __name__ == '__main__':
-    game = GameLogicClient(host='localhost:5000')
-    game = GameLogicClient(host='localhost:5000')
+    game = GameLogicClient(host=host)
     coordinator = PlayerCoordinator()
     coordinator.run(game)
 
