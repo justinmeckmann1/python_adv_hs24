@@ -14,7 +14,7 @@ POLL_DELAY = 0.5 #Seconds
 
 color = 'red'
 # color = 'yellow'
-host = '192.168.1.232:5000'
+host = 'virtualsquash.ch:5000'
 
 class PlayerCoordinator:
     def __init__(self):
@@ -64,5 +64,7 @@ class PlayerCoordinator:
 if __name__ == '__main__':
     game = GameLogicClient(host=host)
     coordinator = PlayerCoordinator()
-    coordinator.run(game)
+    while(True):
+        coordinator.run(game)
+        time.sleep(1) #wait for restart
 
