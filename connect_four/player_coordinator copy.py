@@ -14,7 +14,7 @@ POLL_DELAY = 0.5 #Seconds
 
 #color = 'red'
 color = 'yellow'
-host = '10.155.126.11:5000'
+host = '192.168.1.232:5000'
 
 class PlayerCoordinator:
     def __init__(self):

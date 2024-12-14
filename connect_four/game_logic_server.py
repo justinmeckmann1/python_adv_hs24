@@ -13,19 +13,19 @@ import threading
 #cd PYTHON_PROJECT/connect_four/
 #nohup python3 game_logic_server.py > output.log 2>&1 &
 
+
 if __name__ == "__main__":
     game = GameLogic()
     app = Flask(__name__)
     swagger = Swagger(app)
 
+    Reset_timer = threading.Timer(10.0, None)
+    Reset_timer_lock = threading.Lock()  # Create a lock for Reset_timer
+
     def reset_board(): 
         global game
         print("Reset Game")
         game = GameLogic() #reset board
-        # Set the timer to call reset_board after 10 seconds
-
-    Reset_timer = threading.Timer(10.0, reset_board)
-
     
     @app.route('/api/board', methods=['GET'])
     def get_board():
@@ -116,13 +116,16 @@ if __name__ == "__main__":
                             description: The current state of the game, represented as integer number [0..4]
                             example: 1
         """
+        global Reset_timer #not really reentrent but it works
         state = game.get_state()
         #if GameState is a finished condition then start a timer to reset the game
-        
+        with Reset_timer_lock: # Due to multithreadting and if multiple requests happen exactly make a threading lock so it does not start 2 timers.
         # print(f"GET /api/state received from {request.remote_addr}")
-        if (state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]) and (Reset_timer.is_alive()==False):
-            # Start the timer
-            Reset_timer.start()
+            if (state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]) and (Reset_timer.is_alive()==False):
+                # Start the timer
+                # Set the timer to call reset_board after 10 seconds.
+                Reset_timer = threading.Timer(10.0, reset_board)
+                Reset_timer.start()
         return jsonify({"game_state": state.value}), 200  # status code: 200 Ok
 
     @app.route('/api/drop', methods=['POST'])
