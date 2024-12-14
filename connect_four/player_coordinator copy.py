@@ -12,8 +12,8 @@ import time
 
 POLL_DELAY = 0.5 #Seconds
 
-color = 'red'
-# color = 'yellow'
+#color = 'red'
+color = 'yellow'
 host = '10.155.126.11:5000'
 
 class PlayerCoordinator:
@@ -55,6 +55,7 @@ class PlayerCoordinator:
 
             # Player's turn
             valid = DropState.COLUMN_INVALID
+            self._player.draw_board(game.get_board(), game.get_state())
             while valid != DropState.DROP_OK:
                 column_to_drop = self._player.play_turn()
                 valid = game.drop_token(self._player.player_id, column_to_drop)

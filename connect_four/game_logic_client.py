@@ -3,7 +3,6 @@ from game_state import GameState
 from drop_state import DropState
 from game_token import GameToken
 import requests
-import time
 
 class GameLogicClient(GameLogicBase):
 
@@ -27,10 +26,6 @@ class GameLogicClient(GameLogicBase):
         token = dict(player_id=player, column=column)
         response = requests.post(f"{self._url}/drop", json=token)
         return DropState(response.json().get("drop_state"))
-
-    def wait_for_remote_move(self, delay=0.5):
-        """Wait for remote player's move by polling the server"""
-        time.sleep(delay)
 
 if __name__ == '__main__':
     """

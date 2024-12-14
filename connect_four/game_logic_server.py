@@ -19,9 +19,13 @@ if __name__ == "__main__":
     swagger = Swagger(app)
 
     def reset_board(): 
+        global game
+        print("Reset Game")
         game = GameLogic() #reset board
-    # Set the timer to call reset_board after 10 seconds
+        # Set the timer to call reset_board after 10 seconds
+
     Reset_timer = threading.Timer(10.0, reset_board)
+
     
     @app.route('/api/board', methods=['GET'])
     def get_board():
@@ -116,9 +120,8 @@ if __name__ == "__main__":
         #if GameState is a finished condition then start a timer to reset the game
         
         # print(f"GET /api/state received from {request.remote_addr}")
-        if state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
+        if (state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]) and (Reset_timer.is_alive()==False):
             # Start the timer
-            Reset_timer = threading.Timer(10.0, reset_board)
             Reset_timer.start()
         return jsonify({"game_state": state.value}), 200  # status code: 200 Ok
 
