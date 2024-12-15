@@ -17,7 +17,17 @@ color = 'red'
 host = 'virtualsquash.ch:5000'
 
 class PlayerCoordinator:
+    """
+    Coordinates players actions and game flow in a networked Connect Four game.
+    
+    Attributes:
+        _player (PlayerConsole | PlayerSenseHat): The local player instance
+
+    """
     def __init__(self):
+        """
+        Initialize the player coordinator with appropriate player type.
+        """
         # initialize players
         if os.name != 'nt':
             self._player = PlayerSenseHat(GameToken.RED) if color == 'red' else PlayerSenseHat(GameToken.YELLOW)
@@ -25,6 +35,13 @@ class PlayerCoordinator:
             self._player = PlayerConsole(GameToken.RED) if color == 'red' else PlayerConsole(GameToken.YELLOW)
 
     def run(self, game: GameLogicBase):
+        """
+        Run the networked game loop, coordinating with remote player.
+        
+        Args:
+            game (GameLogicBase): The game logic instance managing rules and state.
+        
+        """
         self._player.draw_board(game.get_board(), game.get_state())
         opponentTurnState =  (GameState.TURN_YELLOW if self._player.player_id == GameToken.RED 
                             else GameState.TURN_RED)

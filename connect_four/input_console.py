@@ -39,7 +39,7 @@ class InputConsole(InputBase):
         Returns:
             Enum: The key code corresponding to the pressed key.
         """
-        if os.name == 'nt':  # Windows
+        if os.name == 'nt':  # if running on Windows
             key = msvcrt.getch()
             if key in (b'\xe0', b'\x00'):  # Special keys (arrow keys send two bytes)
                 key = msvcrt.getch()  # Get the second byte for direction
@@ -61,7 +61,7 @@ class InputConsole(InputBase):
                 raise KeyboardInterrupt()  # Trigger a KeyboardInterrupt
             return Keys.UNKNOWN
 
-        else:
+        else: # if running on Unix (Linux, Raspberry PI)
             fd = sys.stdin.fileno()
             old_settings = termios.tcgetattr(fd)
             try:
@@ -94,6 +94,7 @@ class InputConsole(InputBase):
 if __name__ == '__main__':
     print("press any key, ESC to exit")
     c = InputConsole()
+    # Direct key reading
     while True:
         key = c.read_key()
         print(f"Taste: {key}, Type: {type(key)}")
@@ -102,6 +103,7 @@ if __name__ == '__main__':
         if (key == Keys.ESC):  # Abort with ESC
             break
     print("read from console only if key_pressed, not working on linux")
+    # Non-blocking input checking
     while True:
         if c.key_pressed():
             key = c.read_key()

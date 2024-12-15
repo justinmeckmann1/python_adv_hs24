@@ -14,7 +14,21 @@ from ansi import Ansi
 sense = SenseHat()
 
 class PlayerSenseHat(PlayerBase):
+    """
+    Sensehat-specific implementation of a player in Connect Four.
+    
+    Attributes:
+        _display (DisplayConsole): Console-specific display handler
+        _input (InputConsole): Console-specific input handler
+        _player (GameToken): The player's token (inherited from PlayerBase)
+    """
     def __init__(self, player: GameToken):  # Red or Yellow player
+        """
+        Initialize a console player with their game token.
+
+        Args:
+            player (GameToken): The token (RED or YELLOW) representing this player
+        """
         super().__init__(player)
         # self._display = DisplayConsole()
         # self._input = InputConsole()

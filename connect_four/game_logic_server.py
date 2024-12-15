@@ -5,14 +5,34 @@ from flask import Flask, request, jsonify
 from flasgger import Swagger
 import threading
 
-#To Start Server on Webserver do the following commands:
-#$HOME/miniconda/bin/conda init
-#source ~/.bashrc
-#conda activate myenv
-#cd
-#cd PYTHON_PROJECT/connect_four/
-#nohup python3 game_logic_server.py > output.log 2>&1 &
+"""
+Connect Four Game Server Implementation
 
+The server exposes the following API endpoints:
+- GET /api/board: Returns the current state of the game board
+- GET /api/state: Returns the current game state (whose turn, win state, etc.)
+- POST /api/drop: Handles player moves by dropping tokens in specified columns
+
+Key Components:
+- Flask application for handling HTTP requests
+- Swagger integration for API documentation
+- Threading for handling automatic game resets
+- GameLogic class integration for game state management
+
+Usage:
+    To start the server on a webserver:
+    1. $HOME/miniconda/bin/conda init
+    2. source ~/.bashrc
+    3. conda activate myenv
+    4. cd PYTHON_PROJECT/connect_four/
+    5. nohup python3 game_logic_server.py > output.log 2>&1 &
+
+Dependencies:
+    - Flask
+    - flasgger
+    - threading
+    - GameLogic, GameState, and DropState from local modules
+"""
 
 if __name__ == "__main__":
     game = GameLogic()
@@ -23,6 +43,10 @@ if __name__ == "__main__":
     Reset_timer_lock = threading.Lock()  # Create a lock for Reset_timer
 
     def reset_board(): 
+        """
+        Resets the game board by creating a new GameLogic instance.
+        This function is called automatically after a game ends.
+        """
         global game
         print("Reset Game")
         game = GameLogic() #reset board

@@ -9,7 +9,18 @@ from game_logic_base import GameLogicBase
 from game_logic import GameLogic
 
 class PlayerCoordinator:
+    """    
+    Coordinates player actions and game flow in a networked Connect Four game.
+    Attributes:
+        _player_red (PlayerConsole | PlayerSenseHat): The red player instance
+        _player_yellow (PlayerConsole | PlayerSenseHat): The yellow player instance
+    """
+
     def __init__(self):
+        """
+        Initialize the player coordinator with appropriate player types.
+        """
+        
         # initialize players
         if os.name == 'nt': # Windows (use Console)
             self._player_red = PlayerConsole(GameToken.RED)  # X
@@ -19,6 +30,12 @@ class PlayerCoordinator:
             self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
 
     def run(self, game: GameLogicBase):
+        """
+        Run the local game loop, coordinating turns between two players.
+
+        Args:
+            game (GameLogicBase): The game logic instance managing rules and state
+        """
         self._player_red.draw_board(game.get_board(), game.get_state())
         self._player_yellow.draw_board(game.get_board(), game.get_state())
         # play game until won or draw

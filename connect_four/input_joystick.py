@@ -16,8 +16,16 @@ class InputJoystick(InputBase):
         """
         Reads all joystick events and process the last one, if no event occured since the last call, will wait for one.
 
+        Args:
+            p_sense (SenseHat): The Sense HAT interface object to use for joystick input.
+
         Returns:
-            Enum: The key code corresponding to the last joykstick movement.
+            Enum: The key code corresponding to the last joystick movement:
+                - Keys.UP: Joystick moved up
+                - Keys.DOWN: Joystick moved down
+                - Keys.LEFT: Joystick moved left
+                - Keys.RIGHT: Joystick moved right
+                - Keys.ENTER: Joystick pressed (middle)
         """
         event = self.sense.stick.wait_for_event()
         while not(event.action == "pressed" or event.action == "held"):

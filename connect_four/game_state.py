@@ -5,9 +5,13 @@ from game_token import GameToken
 class GameState(Enum):
     """
     Enum class representing different states of the game.
-
-    This class defines the possible states that the game can be in,
-    including the current turn and the outcome of the game.
+    
+    Attributes:
+        TURN_RED (int): Indicates it's Red player's turn (value: 0)
+        TURN_YELLOW (int): Indicates it's Yellow player's turn (value: 1)
+        WON_RED (int): Indicates Red player has won (value: 2)
+        WON_YELLOW (int): Indicates Yellow player has won (value: 3)
+        DRAW (int): Indicates the game ended in a draw (value: 4)
     """
     TURN_RED = 0          # It's Red's turn to play
     TURN_YELLOW = 1       # It's Yellow's turn to play
@@ -17,6 +21,20 @@ class GameState(Enum):
 
 
 def check_win(board: list) -> GameState:
+    """
+    Checks the current state of the Connect Four game board.
+
+    Args:
+        board: A 2D list representing the game board where each cell contains a GameToken
+              (RED, YELLOW, or EMPTY)
+
+    Returns:
+        GameState: The current state of the game. Possible returns are:
+            - GameState.WON_RED: If red player has won
+            - GameState.WON_YELLOW: If yellow player has won
+            - GameState.DRAW: If the game is a draw (board is full)
+            - GameState.TURN_RED: If the game is still ongoing (default state)
+    """
     # Check horizontal
     for row in board:
         for i in range(len(row) - 3):

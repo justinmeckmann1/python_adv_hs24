@@ -18,7 +18,7 @@ class PlayerBase:
         """
         Initialize the player with a specific game token.
 
-        Parameters:
+        Args:
         - player: The token representing the player (e.g., RED or YELLOW).
         """
         self._player = player
@@ -82,7 +82,7 @@ class PlayerBase:
         """
         Draw something to indicate the winner
 
-        Parameters:
+        Args:
         - token: The token of the winner
         """
         self._display.draw_winner(token)

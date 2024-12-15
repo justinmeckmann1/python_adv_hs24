@@ -4,9 +4,28 @@ from game_state import GameState, check_win
 from drop_state import DropState
 import random
 
-class GameLogic(GameLogicBase):
+"""
+Game Logic Implementation for Connect Four
 
+Classes:
+    GameLogic: Main game logic implementation handling board state and moves
+"""
+
+class GameLogic(GameLogicBase):
+    """
+    Implementation of Connect Four game logic.
+
+    Attributes:
+        _board (List[List[GameToken]]): 6x7 game board grid
+        __starter_state (GameState): Randomly chosen initial player's turn
+    """
     def __init__(self):
+        """
+        Initialize a new game board and randomly select starting player.
+
+        The board is created as a 6x7 grid of empty tokens, and the starting
+        player (RED or YELLOW) is chosen randomly.
+        """
         super().__init__()
         self._board = [[GameToken.EMPTY for _ in range(7)] for _ in range(6)]
         if random.getrandbits(1):
@@ -15,6 +34,19 @@ class GameLogic(GameLogicBase):
             self.__starter_state = GameState.TURN_YELLOW
 
     def drop_token(self, player: GameToken, column: int) -> DropState:
+        """
+        Attempt to drop a player's token in the specified column.
+
+        Args:
+            player (GameToken): The player's token (RED or YELLOW)
+            column (int): The column index where the token should be dropped (0-6)
+
+        Returns:
+            DropState: Status of the drop attempt:
+                - DROP_OK: Token was successfully placed
+                - COLUMN_INVALID: Column index is out of bounds
+                - COLUMN_FULL: Selected column has no empty spaces
+        """
         # check if the column is valid (0..6) => return the appropriate DropState
         if(column<=-1 or column>=len(self._board[0])):
             return DropState.COLUMN_INVALID
@@ -32,6 +64,18 @@ class GameLogic(GameLogicBase):
         return DropState.DROP_OK
 
     def get_state(self) -> GameState:
+        """
+        Determine the current state of the game.
+
+        Returns:
+            GameState: Current game state:
+                - WON_RED: Red player has won
+                - WON_YELLOW: Yellow player has won
+                - DRAW: Game is a draw
+                - TURN_RED: Red player's turn
+                - TURN_YELLOW: Yellow player's turn
+        """
+        
         game_result = check_win(self._board)
         
         # check if game is over and if so, return the results
