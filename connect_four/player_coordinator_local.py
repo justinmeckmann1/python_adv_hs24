@@ -11,11 +11,11 @@ from game_logic import GameLogic
 class PlayerCoordinator:
     def __init__(self):
         # initialize players
-        if os.name == 'nt':
+        if os.name == 'nt': # Windows (use Console)
             self._player_red = PlayerConsole(GameToken.RED)  # X
             self._player_yellow = PlayerConsole(GameToken.YELLOW)  # 0
-        else:
-            self._player_red = PlayerConsole(GameToken.RED)  # X
+        else: # Raspberry Pi (use SenseHat)
+            self._player_red = PlayerSenseHat(GameToken.RED)  # X
             self._player_yellow = PlayerSenseHat(GameToken.YELLOW)  # 0
 
     def run(self, game: GameLogicBase):
