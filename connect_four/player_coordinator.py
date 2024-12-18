@@ -52,9 +52,10 @@ class PlayerCoordinator:
 
             #Check if game is over
             if game_state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                winner_token = (GameToken.RED if game_state == GameState.WON_RED 
-                            else GameToken.YELLOW)
-                self._player.display_winner(winner_token)
+                if game_state in [GameState.WON_YELLOW, GameState.WON_RED]:
+                    winner_token = (GameToken.RED if game_state == GameState.WON_RED 
+                                    else GameToken.YELLOW)
+                    self._player.display_winner(winner_token)
                 break
 
             #Wait aslong as its not your turn
@@ -65,9 +66,10 @@ class PlayerCoordinator:
             self._player.draw_board(game.get_board(), game_state)
             #Check again if game is over
             if game_state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                winner_token = (GameToken.RED if game_state == GameState.WON_RED 
-                            else GameToken.YELLOW)
-                self._player.display_winner(winner_token)
+                if game_state in [GameState.WON_YELLOW, GameState.WON_RED]:
+                    winner_token = (GameToken.RED if game_state == GameState.WON_RED 
+                                    else GameToken.YELLOW)
+                    self._player.display_winner(winner_token)
                 break
 
             # Player's turn

@@ -17,7 +17,17 @@ color = 'yellow'
 host = 'virtualsquash.ch:5000'
 
 class PlayerCoordinator:
+    """
+    Coordinates players actions and game flow in a networked Connect Four game.
+    
+    Attributes:
+        _player (PlayerConsole | PlayerSenseHat): The local player instance
+
+    """
     def __init__(self):
+        """
+        Initialize the player coordinator with appropriate player type.
+        """
         # initialize players
         if os.name != 'nt':
             self._player = PlayerSenseHat(GameToken.RED) if color == 'red' else PlayerSenseHat(GameToken.YELLOW)
@@ -25,6 +35,13 @@ class PlayerCoordinator:
             self._player = PlayerConsole(GameToken.RED) if color == 'red' else PlayerConsole(GameToken.YELLOW)
 
     def run(self, game: GameLogicBase):
+        """
+        Run the networked game loop, coordinating with remote player.
+        
+        Args:
+            game (GameLogicBase): The game logic instance managing rules and state.
+        
+        """
         self._player.draw_board(game.get_board(), game.get_state())
         opponentTurnState =  (GameState.TURN_YELLOW if self._player.player_id == GameToken.RED 
                             else GameState.TURN_RED)
@@ -35,9 +52,10 @@ class PlayerCoordinator:
 
             #Check if game is over
             if game_state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                winner_token = (GameToken.RED if game_state == GameState.WON_RED 
-                            else GameToken.YELLOW)
-                self._player.display_winner(winner_token)
+                if game_state in [GameState.WON_YELLOW, GameState.WON_RED]:
+                    winner_token = (GameToken.RED if game_state == GameState.WON_RED 
+                                    else GameToken.YELLOW)
+                    self._player.display_winner(winner_token)
                 break
 
             #Wait aslong as its not your turn
@@ -48,14 +66,14 @@ class PlayerCoordinator:
             self._player.draw_board(game.get_board(), game_state)
             #Check again if game is over
             if game_state in [GameState.WON_YELLOW, GameState.WON_RED, GameState.DRAW]:
-                winner_token = (GameToken.RED if game_state == GameState.WON_RED 
-                            else GameToken.YELLOW)
-                self._player.display_winner(winner_token)
+                if game_state in [GameState.WON_YELLOW, GameState.WON_RED]:
+                    winner_token = (GameToken.RED if game_state == GameState.WON_RED 
+                                    else GameToken.YELLOW)
+                    self._player.display_winner(winner_token)
                 break
 
             # Player's turn
             valid = DropState.COLUMN_INVALID
-            self._player.draw_board(game.get_board(), game.get_state())
             while valid != DropState.DROP_OK:
                 column_to_drop = self._player.play_turn()
                 valid = game.drop_token(self._player.player_id, column_to_drop)
