@@ -9,11 +9,12 @@ from game_logic_base import GameLogicBase
 from game_logic import GameLogic
 from game_logic_client import GameLogicClient
 import time
+import random
 
 POLL_DELAY = 0.5 #Seconds
 
 color = 'red'
-# color = 'yellow'
+#color = 'yellow'
 host = 'eee-w014-104.simple.eee.intern:5000'
 
 
@@ -220,8 +221,12 @@ class PlayerCoordinator:
             valid = DropState.COLUMN_INVALID
             while valid != DropState.DROP_OK:
                 column_to_drop = best_drop_position(game.get_board(),self._player.player_id)
-                valid = game.drop_token(self._player.player_id, column_to_drop)
-            self._player.draw_board(game.get_board(), game.get_state())
+                try:
+                    valid = game.drop_token(self._player.player_id, column_to_drop)
+                except:
+                    while valid != DropState.DROP_OK:
+                        valid = game.drop_token(self._player.player_id, random.randint(0,6))
+                        print("random!!!!!")
 
 # start a remote game
 if __name__ == '__main__':
